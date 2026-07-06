@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 import Navbar from './navbar'
 import '../styles/home.css'
 import heroImg from '../assets/hero.png'
@@ -71,7 +72,7 @@ const Home = () => {
                     </div>
 
                     <div className="testimonial-card">
-                        <span class="quote">❝</span>
+                        <span className="quote">❝</span>
                         <p>
                             Being an instructor on SkillShare allows me to give back while
                             making a significant side income. The platform is seamless.
@@ -87,7 +88,7 @@ const Home = () => {
                     </div>
 
                     <div className="testimonial-card">
-                        <span class="quote">❝</span>
+                        <span className="quote">❝</span>
                         <p>
                             The 1:1 sessions are so much better than prerecorded videos. I
                             could ask specific questions about my project and get answers instantly.
@@ -119,7 +120,13 @@ const Home = () => {
                 </p>
 
                 <div className="cta-buttons">
-                    <button className="primary">Become an Instructor</button>
+                    <Link 
+                        to="/verify-instructor" 
+                        className="primary" 
+                        style={{ textDecoration: 'none', display: 'inline-block', textAlign: 'center' }}
+                    >
+                        Become an Instructor
+                    </Link>
                     <button className="secondary">Learn More</button>
                 </div>
 

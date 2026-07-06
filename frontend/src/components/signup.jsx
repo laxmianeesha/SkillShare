@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import axios from 'axios'
 import '../styles/login.css'
@@ -12,6 +12,20 @@ const Signup = () => {
         confirmPassword: "",
         role: "learner"
     })
+    const [loggedInUser, setLoggedInUser] = useState(null);
+
+    useEffect(() => {
+        const storedUser = localStorage.getItem("user");
+        const token = localStorage.getItem("token");
+        if (token && storedUser) {
+            try {
+                const userObj = JSON.parse(storedUser);
+                setLoggedInUser(userObj.username);
+            } catch (err) {
+                console.error("Error parsing user from localStorage:", err);
+            }
+        }
+    }, []);
 
     const handleChange = (e) => {
         setFormData({
@@ -38,11 +52,41 @@ const Signup = () => {
             )
             console.log(res.data)
             localStorage.setItem("token", res.data.token)
+            localStorage.setItem("user", JSON.stringify(res.data.user))
             alert("User registered successfully")
             navigate("/")
         } catch (err) {
             alert(err.response?.data?.message || "Registration failed")
         }
+    }
+
+    if (loggedInUser) {
+        return (
+            <div className="container">
+                <div className="form-box">
+                    <h2>Welcome Back!</h2>
+                    <p style={{ margin: "20px 0", color: "#64748b", textAlign: "center" }}>
+                        You are already logged in as <strong>{loggedInUser}</strong>.
+                    </p>
+                    <div style={{ display: "flex", gap: "10px", flexDirection: "column" }}>
+                        <button onClick={() => navigate("/")} style={{ width: "100%" }}>
+                            Go to Home
+                        </button>
+                        <button 
+                            onClick={() => {
+                                localStorage.removeItem("token");
+                                localStorage.removeItem("user");
+                                setLoggedInUser(null);
+                                window.location.reload();
+                            }} 
+                            style={{ width: "100%", backgroundColor: "#ef4444", marginTop: "10px" }}
+                        >
+                            Log Out
+                        </button>
+                    </div>
+                </div>
+            </div>
+        )
     }
 
     return (

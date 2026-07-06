@@ -18,6 +18,7 @@ async function apply(req, res) {
             github,
             skills
         });
+        console.log("Successfully saved verification record in DB:", newVerification);
         return res.status(200).json({
             success: true,
             message: "apply successfully",

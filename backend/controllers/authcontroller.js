@@ -160,6 +160,23 @@ async function getAll(req, res) {
         });
     }
 }
+async function getAllUsers(req, res) {
+    try {
+        const users = await usermodel.find();
+
+        res.status(200).json({
+            success: true,
+            count: users.length,
+            users
+        });
+    } catch (err) {
+        res.status(500).json({
+            success: false,
+            message: err.message
+        });
+    }
+}
+
 module.exports = {
-    register, login, getAll, auth
+    register, login, getAll, auth, getAllUsers
 };

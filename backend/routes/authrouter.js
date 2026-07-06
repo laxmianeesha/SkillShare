@@ -15,4 +15,5 @@ authrouter.post("/login", authcontroller.login);
 authrouter.post("/apply", authcontroller.auth, upload.single("resume"), Instructor.apply);
 authrouter.post("/create", authcontroller.auth, Profile.createProfile)
 authrouter.get("/mentor", Profile.getallmentors)
+authrouter.get("/allusers", authcontroller.getAllUsers);
 module.exports = authrouter;
